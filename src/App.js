@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import './style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Search from './Components/Search';
-import Create from './Components/Create';
-import ListOfTodos from './Components/ListOfTodos';
+import Search from './Components/Search/Search';
+import Create from './Components/Create/Create';
+import ListOfTodos from './Components/ListOfTodos/ListOfTodos';
 
 export default class App extends Component {
   constructor() {
@@ -15,25 +15,26 @@ export default class App extends Component {
   }
 
   addTodo = (value) => {
+    const id = new Date().valueOf();
     const { todos } = this.state;
-    let newTodos = [...todos, value];
+    let newTodos = [...todos, { value, id }];
     this.setState({ todos: newTodos });
   };
 
-  editTodo = (index, value) => {
-    console.log('-----------', index, value);
+  editTodo = (id, value) => {
     const { todos } = this.state;
-    const newTodos = todos;
-    newTodos[index] = value;
+    const newTodos = [...todos];
+    const index = todos.findIndex((item) => item.id == id);
+    newTodos[index].value = value;
     this.setState({
       todos: newTodos,
     });
   };
 
-  deleteTodo = (index) => {
-    console.log('1111111111', index);
+  deleteTodo = (id) => {
     const { todos } = this.state;
     const newArr = [...todos];
+    const index = todos.findIndex((item) => item.id == id);
     newArr.splice(index, 1);
     this.setState({
       todos: newArr,
@@ -57,7 +58,7 @@ export default class App extends Component {
             <Create onCreate={this.addTodo} />
             <ListOfTodos
               todos={this.state.todos.filter((todo) =>
-                todo.includes(this.state.search)
+                todo.value.includes(this.state.search)
               )}
               onEditTodo={this.editTodo}
               onDeleteTodo={this.deleteTodo}

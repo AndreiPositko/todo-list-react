@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Todo from './Todo';
+import Todo from '../Todo/Todo';
 
 export default class ListOfTodos extends Component {
   render() {
@@ -7,12 +7,12 @@ export default class ListOfTodos extends Component {
     return (
       <div className="list__todos">
         {Array.isArray(todos)
-          ? todos.map((item, index) => (
+          ? todos.map((item) => (
               <Todo
-                todo={item}
-                key={index}
-                onSave={(value) => onEditTodo(index, value)}
-                onDelete={() => onDeleteTodo(index)}
+                todo={item.value}
+                key={item.id}
+                onSave={(value) => onEditTodo(item.id, value)}
+                onDelete={() => onDeleteTodo(item.id)}
               />
             ))
           : 'no data'}
