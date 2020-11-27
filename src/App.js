@@ -1,21 +1,22 @@
 import React, { Component } from 'react';
 import './style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Search from './Components/search';
-import Create from './Components/create';
-import ListOfTodos from './Components/listOfTodos';
+import Search from './Components/Search';
+import Create from './Components/Create';
+import ListOfTodos from './Components/ListOfTodos';
 
 export default class App extends Component {
   constructor() {
     super();
     this.state = {
       todos: [],
+      search: '',
     };
   }
 
   addTodo = (value) => {
     const { todos } = this.state;
-    let newTodos = [value, ...todos];
+    let newTodos = [...todos, value];
     this.setState({ todos: newTodos });
   };
 
@@ -30,9 +31,18 @@ export default class App extends Component {
   };
 
   deleteTodo = (index) => {
+    console.log('1111111111', index);
     const { todos } = this.state;
+    const newArr = [...todos];
+    newArr.splice(index, 1);
     this.setState({
-      todos: todos.splice(index, 1),
+      todos: newArr,
+    });
+  };
+
+  searchTodo = (search) => {
+    this.setState({
+      search,
     });
   };
 
@@ -43,10 +53,12 @@ export default class App extends Component {
         <div className="wrapper">
           <div className="input__block">
             <h1 className="main__title">ToDo List</h1>
-            <Search />
+            <Search onSearch={this.searchTodo} />
             <Create onCreate={this.addTodo} />
             <ListOfTodos
-              todos={this.state.todos}
+              todos={this.state.todos.filter((todo) =>
+                todo.includes(this.state.search)
+              )}
               onEditTodo={this.editTodo}
               onDeleteTodo={this.deleteTodo}
             />

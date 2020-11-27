@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Todo from './todo';
+import Todo from './Todo';
 
 export default class ListOfTodos extends Component {
   render() {
@@ -12,7 +12,7 @@ export default class ListOfTodos extends Component {
                 todo={item}
                 key={index}
                 onSave={(value) => onEditTodo(index, value)}
-                onDelete={onDeleteTodo(index)}
+                onDelete={() => onDeleteTodo(index)}
               />
             ))
           : 'no data'}

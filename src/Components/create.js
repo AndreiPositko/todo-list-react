@@ -10,13 +10,13 @@ export default class Create extends Component {
   }
 
   createTask = () => {
-    this.props.onCreate(this.state.stateValue)
+    this.props.onCreate(this.state.stateValue);
   };
 
   getValueFromInput = (event) => {
     this.setState({
-      stateValue: event.target.value
-    })
+      stateValue: event.target.value,
+    });
   };
 
   render() {
@@ -29,7 +29,10 @@ export default class Create extends Component {
             aria-describedby="basic-addon2"
           />
           <InputGroup.Append>
-            <Button variant="outline-primary" onClick={this.createTask}>
+            <Button
+              variant="outline-primary"
+              onClick={this.createTask}
+            >
               Create Task
             </Button>
           </InputGroup.Append>

@@ -62,7 +62,7 @@ export default class Todo extends Component {
               </button>
               <button
                 className="button btn__delete"
-                onClick={this.props.onDelete()}
+                onClick={() => this.props.onDelete()}
               >
                 Delete
               </button>
