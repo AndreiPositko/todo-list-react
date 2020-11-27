@@ -1,0 +1,93 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-image: url('./img/time-management.jpg');
+}
+
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+.input__block {
+    background-color: rgb(248, 231, 231);
+    padding: 20px;
+    border: 2px solid rgba(100, 214, 186, 0.7);
+    border-radius: 10px;
+    margin: 20%;
+}
+
+.wrapper {
+    padding: 0 20px;
+}
+
+.main__title {
+    text-align: center;
+    color: rgb(18, 122, 190);
+    border-bottom: 2px solid rgba(228, 180, 240, 0.8);
+}
+
+input {
+    width: 100%;
+    min-height: 50px;
+    border: 3px solid grey;
+    border-radius: 10px;
+    padding: 7px;
+    margin-bottom: 20px;
+}
+
+input[type="text"] {
+    font-size: 22px;
+
+}
+
+.search__input {
+    margin-bottom: 15px;
+}
+
+input.create__input {
+    width: 400px;
+}
+
+.list__todos {
+    min-height: 200px;
+    width: 100%;
+    border: 2px solid rgb(151, 185, 199);
+    padding: 3px;
+}
+
+.todo__item {
+    display: inline-block;
+    border: 2px solid rgba(199, 195, 195, 0.6);
+    width: 100%;
+    /* margin: 0 5px; */
+    padding: 10px;
+}
+
+.todo__text {
+    font-size: 18px;
+    margin-bottom: 0;
+    font-style: italic;
+}
+
+.todo__item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.button {
+    border: none;
+    outline: none;
+    padding: 5px 15px;
+    background-color: rgb(119, 161, 88);
+    color: white;
+}
+
+.btn__edit {
+    margin-right: 10px;
+}
