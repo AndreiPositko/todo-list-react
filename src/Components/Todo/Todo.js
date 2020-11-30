@@ -58,7 +58,6 @@ export default class Todo extends Component {
             <input
               className="todo__checkbox"
               type="checkbox"
-              // onClick={() => changeStatus()}
             />
             <div className="todo__block_inner">
               <p className="todo__text">{todo}</p>

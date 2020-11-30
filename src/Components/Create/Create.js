@@ -6,21 +6,47 @@ export default class Create extends Component {
     super();
     this.state = {
       stateValue: '',
+      error: false,
     };
   }
 
   createTask = () => {
-    this.props.onCreate(this.state.stateValue);
-    this.setState({ stateValue: '' });
+    const { stateValue } = this.state;
+
+    if (stateValue && stateValue !== '') {
+      this.props.onCreate(this.state.stateValue);
+      this.setState({ stateValue: '' });
+    } else {
+      this.setState({
+        error: true,
+      });
+    }
   };
 
   getValueFromInput = (event) => {
+    const { value } = event.target;
+    if (value !== '') {
+      this.setState({
+        error: false,
+      });
+    } else {
+      this.setState({
+        error: true,
+      });
+    }
     this.setState({
       stateValue: event.target.value,
     });
   };
 
+  handleBlur = () => {
+    this.setState({
+      error: false,
+    })
+  }
+
   render() {
+    const { error } = this.state;
     return (
       <>
         <InputGroup className="mb-3">
@@ -30,6 +56,7 @@ export default class Create extends Component {
             aria-describedby="basic-addon2"
             value={this.state.stateValue}
             onChange={this.getValueFromInput}
+            onBlur={this.handleBlur}
           />
           <InputGroup.Append>
             <Button variant="outline-primary" onClick={this.createTask}>
@@ -37,7 +64,13 @@ export default class Create extends Component {
             </Button>
           </InputGroup.Append>
         </InputGroup>
-        <p>{this.state.valueArr}</p>
+        <p
+          className="error__text"
+          style={{ display: error ? 'block' : 'none' }}
+        >
+          Type your task in the field please!
+        </p>
+        {/* <p>{this.state.valueArr}</p> */}
       </>
     );
   }

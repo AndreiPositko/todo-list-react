@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Search from './Components/Search/Search';
 import Create from './Components/Create/Create';
 import ListOfTodos from './Components/ListOfTodos/ListOfTodos';
-import { api } from './Api/api';
+import { api } from './utils/api';
 
 export default class App extends Component {
   constructor() {
@@ -16,10 +16,9 @@ export default class App extends Component {
   }
 
   async componentDidMount() {
-    const result = await api.getTodos();
-    console.log(result);
+    const todos = await api.getTodos();
     this.setState({
-      todos: result,
+      todos,
     });
   }
 
@@ -27,8 +26,7 @@ export default class App extends Component {
     const id = new Date().valueOf();
     const { todos } = this.state;
     await api.createTodo({ value, id });
-    let newTodos = [...todos, { value, id }];
-    this.setState({ todos: newTodos });
+    this.setState({ todos: [...todos, { value, id }] });
   };
 
   editTodo = async (id, value) => {
@@ -36,7 +34,7 @@ export default class App extends Component {
     const newTodos = [...todos];
     const index = todos.findIndex((item) => item.id == id);
     newTodos[index].value = value;
-    const res = await api.editTodo(id, {id, value});
+    const res = await api.editTodo(id, { id, value });
     console.log('-----------------', res);
     this.setState({
       todos: newTodos,
