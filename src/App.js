@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Search from './Components/Search/Search';
 import Create from './Components/Create/Create';
 import ListOfTodos from './Components/ListOfTodos/ListOfTodos';
+import { api } from './Api/api';
 
 export default class App extends Component {
   constructor() {
@@ -14,9 +15,10 @@ export default class App extends Component {
     };
   }
 
-  addTodo = (value) => {
+  addTodo = async (value) => {
     const id = new Date().valueOf();
     const { todos } = this.state;
+    await api.createTodo({value, id});
     let newTodos = [...todos, { value, id }];
     this.setState({ todos: newTodos });
   };
