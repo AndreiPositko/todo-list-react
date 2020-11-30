@@ -22,6 +22,27 @@ export default class Todo extends Component {
     });
   }
 
+  getCurrentDate = () => {
+    const date = new Date();
+    const currentDate = new Date().getDate();
+    const currentDay = date.getDay();
+    const currentMonth = date.getMonth();
+    const fullYear = date.getFullYear();
+    const days = [
+      'Sunday',
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+    ];
+    const month = 'January, February, March, April, May, June, July, August, September, October, November, December'.split(
+      ','
+    );
+    return `${days[currentDay]}, ${currentDate} ${month[currentMonth]} ${fullYear}`;
+  };
+
   render() {
     const { todo } = this.props;
     const { editMode, value } = this.state;
@@ -33,20 +54,30 @@ export default class Todo extends Component {
             onChange={(e) => this.setState({ value: e.target.value })}
           />
         ) : (
-          <p className="todo__text">{todo}</p>
+          <div className="todo__block">
+            <input
+              className="todo__checkbox"
+              type="checkbox"
+              // onClick={() => changeStatus()}
+            />
+            <div className="todo__block_inner">
+              <p className="todo__text">{todo}</p>
+              <p className="todo__date">{this.getCurrentDate()}</p>
+            </div>
+          </div>
         )}
 
         <div className="todo__buttons">
           {editMode ? (
             <>
               <button
-                className="button btn__delete"
+                className="button btn__save"
                 onClick={() => this.handleSave()}
               >
                 Save
               </button>
               <button
-                className="button btn__delete"
+                className="button btn__cancel"
                 onClick={() => this.toggleMode(false)}
               >
                 Cancel
@@ -54,7 +85,7 @@ export default class Todo extends Component {
             </>
           ) : (
             <>
-              <button
+                <button
                 className="button btn__edit"
                 onClick={() => this.toggleMode(true)}
               >

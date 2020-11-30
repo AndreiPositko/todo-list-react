@@ -15,26 +15,37 @@ export default class App extends Component {
     };
   }
 
+  async componentDidMount() {
+    const result = await api.getTodos();
+    console.log(result);
+    this.setState({
+      todos: result,
+    });
+  }
+
   addTodo = async (value) => {
     const id = new Date().valueOf();
     const { todos } = this.state;
-    await api.createTodo({value, id});
+    await api.createTodo({ value, id });
     let newTodos = [...todos, { value, id }];
     this.setState({ todos: newTodos });
   };
 
-  editTodo = (id, value) => {
+  editTodo = async (id, value) => {
     const { todos } = this.state;
     const newTodos = [...todos];
     const index = todos.findIndex((item) => item.id == id);
     newTodos[index].value = value;
+    const res = await api.editTodo(id, {id, value});
+    console.log('-----------------', res);
     this.setState({
       todos: newTodos,
     });
   };
 
-  deleteTodo = (id) => {
+  deleteTodo = async (id) => {
     const { todos } = this.state;
+    await api.deleteTodo(id);
     const newArr = [...todos];
     const index = todos.findIndex((item) => item.id == id);
     newArr.splice(index, 1);

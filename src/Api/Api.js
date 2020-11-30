@@ -41,7 +41,7 @@ export const api = {
             console.warn(error);
         }
     },
-    editTodo: async (data, id) => {
+    editTodo: async (id, data) => {
         try {
             const editTodo = await fetch(`${BASE}/todo/${id}`, {
                 method: 'PUT',
