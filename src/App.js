@@ -15,41 +15,43 @@ export default class App extends Component {
     };
   }
 
-  async componentDidMount() {
+  async renderTodo() {
     const todos = await api.getTodos();
     this.setState({
       todos,
     });
   }
 
+  componentDidMount() {
+    this.renderTodo();
+  }
+
   addTodo = async (value) => {
     const id = new Date().valueOf();
+    const isDone = false;
     const { todos } = this.state;
-    await api.createTodo({ value, id });
-    this.setState({ todos: [...todos, { value, id }] });
+    const createdTodo = await api.createTodo({ value, id, isDone });
+    if (createdTodo && createdTodo.id) {
+      this.setState({
+        todos: [
+          ...todos,
+          {
+            value: createdTodo.value,
+            id: createdTodo.id,
+          },
+        ],
+      });
+    }
   };
 
-  editTodo = async (id, value) => {
-    const { todos } = this.state;
-    const newTodos = [...todos];
-    const index = todos.findIndex((item) => item.id == id);
-    newTodos[index].value = value;
-    const res = await api.editTodo(id, { id, value });
-    console.log('-----------------', res);
-    this.setState({
-      todos: newTodos,
-    });
+  editTodo = async (data) => {
+    await api.editTodo(data);
+    this.renderTodo();
   };
 
   deleteTodo = async (id) => {
-    const { todos } = this.state;
     await api.deleteTodo(id);
-    const newArr = [...todos];
-    const index = todos.findIndex((item) => item.id == id);
-    newArr.splice(index, 1);
-    this.setState({
-      todos: newArr,
-    });
+    this.renderTodo();
   };
 
   searchTodo = (search) => {
@@ -58,8 +60,12 @@ export default class App extends Component {
     });
   };
 
+  filterTodo = () => {
+    const { todos, search } = this.state;
+    return todos.filter((todo) => todo.value.toLowerCase().includes(search));
+  };
+
   render() {
-    console.log('_______', this.state.todos);
     return (
       <div className="container">
         <div className="wrapper">
@@ -68,9 +74,7 @@ export default class App extends Component {
             <Search onSearch={this.searchTodo} />
             <Create onCreate={this.addTodo} />
             <ListOfTodos
-              todos={this.state.todos.filter((todo) =>
-                todo.value.includes(this.state.search)
-              )}
+              todos={this.filterTodo()}
               onEditTodo={this.editTodo}
               onDeleteTodo={this.deleteTodo}
             />

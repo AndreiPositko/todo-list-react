@@ -5,17 +5,17 @@ export default class Create extends Component {
   constructor() {
     super();
     this.state = {
-      stateValue: '',
+      taskName: '',
       error: false,
     };
   }
 
   createTask = () => {
-    const { stateValue } = this.state;
+    const { taskName } = this.state;
 
-    if (stateValue && stateValue !== '') {
-      this.props.onCreate(this.state.stateValue);
-      this.setState({ stateValue: '' });
+    if (taskName && taskName !== '') {
+      this.props.onCreate(this.state.taskName);
+      this.setState({ taskName: '' });
     } else {
       this.setState({
         error: true,
@@ -35,7 +35,7 @@ export default class Create extends Component {
       });
     }
     this.setState({
-      stateValue: event.target.value,
+      taskName: event.target.value,
     });
   };
 
@@ -54,7 +54,7 @@ export default class Create extends Component {
             placeholder="Type you task here"
             aria-label="Type you task here"
             aria-describedby="basic-addon2"
-            value={this.state.stateValue}
+            value={this.state.taskName}
             onChange={this.getValueFromInput}
             onBlur={this.handleBlur}
           />

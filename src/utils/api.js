@@ -41,9 +41,9 @@ export const api = {
             console.warn(error);
         }
     },
-    editTodo: async (id, data) => {
+    editTodo: async (data) => {
         try {
-            const editTodo = await fetch(`${BASE}/todo/${id}`, {
+            const editTodo = await fetch(`${BASE}/todo/${data.id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json;charset=utf-8'

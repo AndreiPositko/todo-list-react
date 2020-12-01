@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+// import { api } from '../../utils/api';
 
 export default class Todo extends Component {
   constructor(props) {
@@ -6,6 +7,7 @@ export default class Todo extends Component {
     this.state = {
       editMode: false,
       value: props.todo,
+      isDone: props.isDone,
     };
   }
 
@@ -43,11 +45,27 @@ export default class Todo extends Component {
     return `${days[currentDay]}, ${currentDate} ${month[currentMonth]} ${fullYear}`;
   };
 
+  toggleIsDone = async (e) => {
+    this.props.onStatus(e.target.checked);
+  };
+
+  changeTextToCrossed() {
+    const { isDone } = this.props;
+    const result = isDone ? 'todo__text crossed' : 'todo__text';
+    return result;
+  }
+
+  changeItemBlock() {
+    const { isDone } = this.props;
+    const result = isDone ? 'todo__item todo__disabled' : 'todo__item';
+    return result;
+  }
+
   render() {
-    const { todo } = this.props;
+    const { todo, isDone } = this.props;
     const { editMode, value } = this.state;
     return (
-      <div className="todo__item">
+      <div className={this.changeItemBlock()}>
         {editMode ? (
           <input
             value={value}
@@ -58,9 +76,11 @@ export default class Todo extends Component {
             <input
               className="todo__checkbox"
               type="checkbox"
+              checked={isDone}
+              onChange={(e) => this.toggleIsDone(e)}
             />
             <div className="todo__block_inner">
-              <p className="todo__text">{todo}</p>
+              <p className={this.changeTextToCrossed()}>{todo}</p>
               <p className="todo__date">{this.getCurrentDate()}</p>
             </div>
           </div>
@@ -84,12 +104,14 @@ export default class Todo extends Component {
             </>
           ) : (
             <>
+              {!isDone && (
                 <button
-                className="button btn__edit"
-                onClick={() => this.toggleMode(true)}
-              >
-                Edit
-              </button>
+                  className="button btn__edit"
+                  onClick={() => this.toggleMode(true)}
+                >
+                  Edit
+                </button>
+              )}
               <button
                 className="button btn__delete"
                 onClick={() => this.props.onDelete()}
