@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import './style.css';
+import '../style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Search from './Components/Search/Search';
-import Create from './Components/Create/Create';
-import ListOfTodos from './Components/ListOfTodos/ListOfTodos';
-import { api } from './utils/api';
+import Search from '../Components/Search/Search';
+import Create from '../Components/Create/Create.js';
+import ListOfTodos from '../Components/ListOfTodos/ListOfTodos';
+import { api } from '../utils/api';
 
 export default class App extends Component {
   constructor() {

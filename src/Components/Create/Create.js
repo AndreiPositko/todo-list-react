@@ -23,7 +23,7 @@ export default class Create extends Component {
     }
   };
 
-  getValueFromInput = (event) => {
+  onChangeValue = (event) => {
     const { value } = event.target;
     if (value !== '') {
       this.setState({
@@ -55,7 +55,7 @@ export default class Create extends Component {
             aria-label="Type you task here"
             aria-describedby="basic-addon2"
             value={this.state.taskName}
-            onChange={this.getValueFromInput}
+            onChange={this.onChangeValue}
             onBlur={this.handleBlur}
           />
           <InputGroup.Append>

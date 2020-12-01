@@ -79,6 +79,10 @@ input.create__input {
     max-width: 70%;
 }
 
+.todo__block_inner {
+    width: 86%;
+}
+
 .todo__text {
     font-size: 18px;
     margin-bottom: 0;
@@ -129,13 +133,14 @@ input.create__input {
 @media screen and (max-width: 995px) {
 
     .todo__buttons {
-        flex-wrap: wrap;
+        max-width: 100%;
+        /* flex-wrap: wrap; */
     }
 
     .btn__edit,
     .btn__save {
-        margin-bottom: 5px;
-        margin-right: 0;
+        /* margin-bottom: 5px; */
+        margin-right: 5px;
         width: 100%;
     }
 
@@ -143,10 +148,25 @@ input.create__input {
     .btn__cancel {
         width: 100%;
     }
+
+    .todo__block {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 5px;
+    }
+
+    .todo__block_inner {
+        max-width: 79%;
+    }
+
+    .todo__item {
+        flex-direction: column;
+    }
+
 }
 
 input.todo__checkbox {
-    max-width: 25px;
+    width: 25px;
     margin-right: 20px;
 }
 
@@ -160,14 +180,17 @@ input.todo__checkbox {
     background-color: rgba(255, 227, 134, 0.5);
 }
 
+.text__nodata {
+    font-size: 20px;
+    display: inline-block;
+    margin: 0 auto;
+    padding-top: 20px;
+}
+
 .crossed {
     text-decoration: line-through;
 }
 
 .todo__disabled {
-    opacity: 0.7;
-}
-
-.button__disabled {
-    background-color: grey;
+    opacity: 0.5;
 }

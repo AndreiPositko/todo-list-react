@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-// import { api } from '../../utils/api';
+import moment from 'moment';
 
 export default class Todo extends Component {
   constructor(props) {
     super();
     this.state = {
       editMode: false,
-      value: props.todo,
-      isDone: props.isDone,
+      value: props.todo.value,
     };
   }
 
@@ -24,48 +23,52 @@ export default class Todo extends Component {
     });
   }
 
-  getCurrentDate = () => {
-    const date = new Date();
-    const currentDate = new Date().getDate();
-    const currentDay = date.getDay();
-    const currentMonth = date.getMonth();
-    const fullYear = date.getFullYear();
-    const days = [
-      'Sunday',
-      'Monday',
-      'Tuesday',
-      'Wednesday',
-      'Thursday',
-      'Friday',
-      'Saturday',
-    ];
-    const month = 'January, February, March, April, May, June, July, August, September, October, November, December'.split(
-      ','
-    );
-    return `${days[currentDay]}, ${currentDate} ${month[currentMonth]} ${fullYear}`;
-  };
+  // getCurrentDate = () => {
+  //   const date = new Date();
+  //   const currentDate = new Date().getDate();
+  //   const currentDay = date.getDay();
+  //   const currentMonth = date.getMonth();
+  //   const fullYear = date.getFullYear();
+  //   const days = [
+  //     'Sunday',
+  //     'Monday',
+  //     'Tuesday',
+  //     'Wednesday',
+  //     'Thursday',
+  //     'Friday',
+  //     'Saturday',
+  //   ];
+  //   const month = 'January, February, March, April, May, June, July, August, September, October, November, December'.split(
+  //     ','
+  //   );
+  //   return `${days[currentDay]}, ${currentDate} ${month[currentMonth]} ${fullYear}`;
+  // };
 
   toggleIsDone = async (e) => {
-    this.props.onStatus(e.target.checked);
+    const { checked } = e.target;
+    this.props.onStatus(checked ? new Date().valueOf() : false);
   };
 
   changeTextToCrossed() {
-    const { isDone } = this.props;
+    const { isDone } = this.props.todo;
     const result = isDone ? 'todo__text crossed' : 'todo__text';
     return result;
   }
 
   changeItemBlock() {
-    const { isDone } = this.props;
-    const result = isDone ? 'todo__item todo__disabled' : 'todo__item';
+    const { isDone } = this.props.todo;
+    const result = isDone
+      ? 'todo__block_inner todo__disabled'
+      : 'todo__block_inner';
     return result;
   }
 
   render() {
-    const { todo, isDone } = this.props;
+    const { todo } = this.props;
     const { editMode, value } = this.state;
+
     return (
-      <div className={this.changeItemBlock()}>
+      <div className="todo__item">
         {editMode ? (
           <input
             value={value}
@@ -76,12 +79,19 @@ export default class Todo extends Component {
             <input
               className="todo__checkbox"
               type="checkbox"
-              checked={isDone}
+              checked={todo.isDone}
               onChange={(e) => this.toggleIsDone(e)}
             />
-            <div className="todo__block_inner">
-              <p className={this.changeTextToCrossed()}>{todo}</p>
-              <p className="todo__date">{this.getCurrentDate()}</p>
+            <div className={this.changeItemBlock()}>
+              <p className={this.changeTextToCrossed()}>{todo.value}</p>
+              {/* <p className="todo__date">{this.getCurrentDate()}</p> */}
+              <p className="todo__date">
+                Start - {moment(todo.id).format('LL, dddd')}
+              </p>
+              <p className="todo__date">
+                End -
+                {!!todo.isDone && moment(todo.isDone).format('LL, dddd')}
+              </p>
             </div>
           </div>
         )}
@@ -104,7 +114,7 @@ export default class Todo extends Component {
             </>
           ) : (
             <>
-              {!isDone && (
+              {!todo.isDone && (
                 <button
                   className="button btn__edit"
                   onClick={() => this.toggleMode(true)}

@@ -9,16 +9,17 @@ export default class ListOfTodos extends Component {
         {Array.isArray(todos) && todos.length !== 0 ? (
           todos.map((item) => (
             <Todo
-              todo={item.value}
+              todo={item}
               key={item.id}
               onSave={(value) => onEditTodo({ ...item, value })}
               onDelete={() => onDeleteTodo(item.id)}
-              isDone={item.isDone}
               onStatus={(isDone) => onEditTodo({ ...item, isDone })}
             />
           ))
         ) : (
-          <span>There is no data in your list of Todos</span>
+          <span className="text__nodata">
+            There is no data in your list of Todos
+          </span>
         )}
       </div>
     );
