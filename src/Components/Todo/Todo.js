@@ -66,7 +66,6 @@ export default class Todo extends Component {
   render() {
     const { todo } = this.props;
     const { editMode, value } = this.state;
-
     return (
       <div className="todo__item">
         {editMode ? (
@@ -89,8 +88,7 @@ export default class Todo extends Component {
                 Start - {moment(todo.id).format('LL, dddd')}
               </p>
               <p className="todo__date">
-                End -
-                {!!todo.isDone && moment(todo.isDone).format('LL, dddd')}
+                End -{!!todo.isDone && moment(todo.isDone).format('LL, dddd')}
               </p>
             </div>
           </div>
